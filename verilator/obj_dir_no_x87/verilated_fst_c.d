@@ -1,0 +1,22 @@
+verilated_fst_c.o: \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_fst_c.cpp \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_config.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilatedos.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_types.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_funcs.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_fst_c.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_trace.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/fstcpp/fstcpp_variable_info.cpp \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/fstcpp/fstcpp_variable_info.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/fstcpp/fstcpp.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/fstcpp/fstcpp_assertion.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/fstcpp/fstcpp_stream_write_helper.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/fstcpp/fstcpp_file.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/fstcpp/fstcpp_writer.cpp \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/fstcpp/fstcpp_writer.h \
+  /opt/homebrew/include/lz4.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_trace_imp.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_intrinsics.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.h

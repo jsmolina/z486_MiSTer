@@ -2,24 +2,6 @@ set_global_assignment -name QIP_FILE backend.qip
 
 set_global_assignment -name SYSTEMVERILOG_FILE z486_mister.sv
 
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/z486_pkg.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/ucode_rom.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/cpu_throttle.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/interrupt_controller.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/alu.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/shifter.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/mul_div.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/decoder.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/dsp_mul.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/l1_icache.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/paging_tlb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/paging_unit.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/paging_walker.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/prefetch.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/protection.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/segmentation_unit.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/x87/x87_unit.sv
-set_global_assignment -name SYSTEMVERILOG_FILE src/z486/z486.sv
+set_global_assignment -name QIP_FILE cpu_z386.qip
 
-set_global_assignment -name MISC_FILE src/z486/ucode.mif
 set_global_assignment -name SDC_FILE z486_mister.sdc

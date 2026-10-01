@@ -150,3 +150,12 @@ window:
 The interval is wall-clock seconds. The checkpoint name and trace boundaries
 use simulator time (`2 * cycle`). Each full-system checkpoint can consume
 hundreds of megabytes, so keep retention bounded.
+
+## 386 build
+
+`make z386` builds the 16 MHz 386 variant into `obj_dir_386`. It reads its own
+`ucode.hex` at run time, so run it from that directory:
+
+```sh
+cd obj_dir_386 && ./Vz486_mister_sim --boot0 ../boot0.rom --boot1 ../boot1.rom --disk /tmp/dos.vhd
+```

@@ -30,3 +30,12 @@ the files as follows:
 
 Development and compatibility discussion is available in the
 [MiSTer FPGA forum thread](https://misterfpga.org/viewtopic.php?t=10667).
+
+## 386 Build
+
+An alternative build swaps the 486 for the z386 core from
+[Marty_MiSTer](https://github.com/MiSTer-devel/Marty_MiSTer) (`src/z386`),
+running as a 386DX at a fixed 16 MHz with no cache and no FPU. The rest of the
+system (memory, video, sound, timers) is unchanged. To build it, replace
+`cpu_z486.qip` with `cpu_z386.qip` in `z486_mister.qsf`. The simulator target is
+`make -C verilator z386`.

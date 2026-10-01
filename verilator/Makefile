@@ -21,26 +21,38 @@ VERILATOR_INCLUDE = -I../src -I../src/z486 -I../src/z486/x87
 
 D=../src
 DZ=../src/z486
+D3=../src/z386
+
+CPU_SOURCES ?= \
+		$(DZ)/z486_pkg.sv $(DZ)/ucode_rom.sv $(DZ)/microsequencer.sv $(DZ)/hardwired_control.sv $(DZ)/z486.sv \
+		$(DZ)/cpu_throttle.sv $(DZ)/interrupt_controller.sv \
+		$(DZ)/data_unit.sv $(DZ)/address_unit.sv $(DZ)/shifter.sv $(DZ)/mul_div.sv $(DZ)/decoder.sv \
+		$(DZ)/alu.sv $(DZ)/alu_alt.sv $(DZ)/prefetch.sv $(DZ)/segmentation_unit.sv \
+		$(DZ)/paging_unit.sv $(DZ)/paging_tlb.sv $(DZ)/paging_walker.sv \
+		$(DZ)/x87/x87_pkg.sv $(DZ)/x87/x87_ucode_pkg.sv \
+		$(DZ)/x87/x87_bridge.sv $(DZ)/x87/x87_cordic_rom.sv \
+		$(DZ)/x87/x87_cordic_scratch.sv \
+		$(DZ)/x87/x87_ucode_rom.sv \
+		$(DZ)/x87/x87_sequencer.sv $(DZ)/x87/x87_executor.sv \
+		$(DZ)/x87/x87_transfer_fifo.sv $(DZ)/x87/x87_stack_mem.sv \
+		$(DZ)/x87/x87_command_rom.sv \
+		$(DZ)/x87/x87_control.sv $(DZ)/x87/x87_unit.sv \
+		$(DZ)/dsp_mul.sv $(DZ)/protection.sv \
+		$(DZ)/memory.sv $(DZ)/l1_cache.sv $(DZ)/l1_icache.sv
+
+# 386 at 16 MHz (src/z386_pc.sv), see the z386 target.
+Z386_SOURCES = \
+		$(D3)/z386_pkg.sv $(D3)/ucode_rom.sv $(D3)/alu.sv $(D3)/alu_alt.sv $(D3)/dsp_mul.sv \
+		$(D3)/decoder.sv $(D3)/prefetch.sv $(D3)/l1_icache.sv $(D3)/l1_cache.sv \
+		$(D3)/paging_tlb.sv $(D3)/paging_walker.sv $(D3)/paging_unit.sv $(D3)/protection.sv \
+		$(D3)/segmentation_unit.sv $(D3)/z386.sv $(D)/z386_pc.sv
 
 SOURCES = $(EXTRA_SOURCES) \
 		  ../z486_mister_sim.sv \
 		  $(D)/system.sv \
-		  $(DZ)/z486_pkg.sv $(DZ)/ucode_rom.sv $(DZ)/microsequencer.sv $(DZ)/hardwired_control.sv $(DZ)/z486.sv \
-		  $(DZ)/cpu_throttle.sv $(DZ)/interrupt_controller.sv \
-		  $(DZ)/data_unit.sv $(DZ)/address_unit.sv $(DZ)/shifter.sv $(DZ)/mul_div.sv $(DZ)/decoder.sv \
-		  $(DZ)/alu.sv $(DZ)/alu_alt.sv $(DZ)/prefetch.sv $(DZ)/segmentation_unit.sv \
-		  $(DZ)/paging_unit.sv $(DZ)/paging_tlb.sv $(DZ)/paging_walker.sv \
-		  $(DZ)/x87/x87_pkg.sv $(DZ)/x87/x87_ucode_pkg.sv \
-		  $(DZ)/x87/x87_bridge.sv $(DZ)/x87/x87_cordic_rom.sv \
-		  $(DZ)/x87/x87_cordic_scratch.sv \
-		  $(DZ)/x87/x87_ucode_rom.sv \
-		  $(DZ)/x87/x87_sequencer.sv $(DZ)/x87/x87_executor.sv \
-		  $(DZ)/x87/x87_transfer_fifo.sv $(DZ)/x87/x87_stack_mem.sv \
-		  $(DZ)/x87/x87_command_rom.sv \
-		  $(DZ)/x87/x87_control.sv $(DZ)/x87/x87_unit.sv \
-		  $(DZ)/dsp_mul.sv $(DZ)/protection.sv \
+		  $(CPU_SOURCES) \
 		  $(D)/iobus_adapter.sv $(D)/pic_inta_bridge.sv \
-		  $(D)/memory/main_memory.sv $(D)/memory/split_sdram_backend.sv $(DZ)/memory.sv $(DZ)/l1_cache.sv $(DZ)/l1_icache.sv $(D)/memory/sdram_sim.v \
+		  $(D)/memory/main_memory.sv $(D)/memory/split_sdram_backend.sv $(D)/memory/sdram_sim.v \
 		  $(D)/soc/dma.v $(D)/soc/cdda.v $(D)/soc/floppy.v $(D)/soc/ide.v $(D)/soc/pic.v $(D)/soc/pit_counter.v $(D)/soc/joystick.v \
 		  $(D)/soc/pit.v $(D)/soc/ps2.v $(D)/soc/rtc.v $(D)/soc/vga.v \
 		  $(D)/common/dpram.v $(D)/common/simple_ram.v $(D)/common/simple_fifo.v $(D)/common/async_fifo.v \
@@ -123,8 +135,18 @@ voodoo:
 		VERILATOR_X_FLAGS="$(VERILATOR_X_FLAGS) -DZ486_VOODOO=1" \
 		EXTRA_SOURCES="$(VOODOO_SOURCES)" all
 
+# 386 at 16 MHz. Its ucode.hex differs from the 486 one and readmemh resolves
+# it at run time, so run this build from its object directory:
+#   cd obj_dir_386 && ./Vz486_mister_sim --boot0 ../boot0.rom --boot1 ../boot1.rom
+z386:
+	$(MAKE) OBJ_DIR=obj_dir_386 CPU_SOURCES="$(Z386_SOURCES)" \
+		VERILATOR_INCLUDE="-I../src -I../src/z386" \
+		VERILATOR_X_FLAGS="$(VERILATOR_X_FLAGS) -DCPU_386=1 -DZ386_ALTERA_ALU=1" all
+	ln -sf ../$(D3)/ucode.hex obj_dir_386/ucode.hex
+	ln -sf ../$(D3)/pla_entry_rom.hex obj_dir_386/pla_entry_rom.hex
+
 clean:
-	rm -rf $(OBJ_DIR) obj_dir_trace
+	rm -rf $(OBJ_DIR) obj_dir_386 obj_dir_trace
 	rm -f ucode.hex pla_entry_rom.hex pla_group_entry.hex waveform.fst
 
-.PHONY: all run trace sim85 x87 no_x87 x87-50 voodoo clean
+.PHONY: all run trace sim85 x87 no_x87 x87-50 voodoo z386 clean

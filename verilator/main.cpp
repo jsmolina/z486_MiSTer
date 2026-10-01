@@ -44,7 +44,7 @@ using std::string;
 using std::vector;
 namespace fs = std::filesystem;
 
-#include "../../12.386tang/verilator/scancode.h"
+#include "scancode.h"
 
 static constexpr int H_RES = 1600;
 static constexpr int V_RES = 900;
