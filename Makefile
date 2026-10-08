@@ -9,7 +9,7 @@ REVISION   := z486_mister
 SWEEP_ARGS := --start 1 --end 20 --jobs 5
 
 .DEFAULT_GOAL := help
-.PHONY: help base debug production build sweep core core24 core486
+.PHONY: help base debug production build sweep
 
 help:
 	@echo 'z486 MiSTer Quartus targets:'
@@ -20,17 +20,7 @@ help:
 	@echo '  sweep       fitter seed sweep (needs the production profile)'
 	@echo '              override seeds/jobs, e.g.:'
 	@echo '                make sweep SWEEP_ARGS="--start 1 --end 5 --jobs 5"'
-	@echo '  core        show the selected CPU core (src/z486 symlink)'
-	@echo '  core24      select 24.z486'
-	@echo '  core486     select 24.z486'
 	@echo '  help        this message (default target)'
-
-# core selection: src/z486 is the single switch point (see set_core.sh).
-core:
-	@./set_core.sh
-
-core24 core486:
-	./set_core.sh $(patsubst core%,%,$@)
 
 # base / debug / production: switch z486_mister.qsf to that profile.
 base debug production:
@@ -38,7 +28,6 @@ base debug production:
 
 # build: one full compile, then the clk_sys top setup-paths report.
 build:
-	@./set_core.sh
 	quartus_sh --flow compile $(REVISION)
 	quartus_sta -t $(REVISION).clk_sys_top_setup.tcl
 	@echo '==> top setup paths: output_files/$(REVISION).clk_sys_top_setup.rpt'

@@ -1,15 +1,9 @@
 # z486 MiSTer core
 
-z486_MiSTer is an experimental PC core for MiSTer built around the
-[z486 CPU](https://github.com/nand2mario/z486), an 80486-class pipelined FPGA
-CPU written in SystemVerilog. The processor combines a fast frontend and
-hardwired implementations of common instructions with microcoded control for
-complex x86 operations. It also includes experimental, incomplete x87 support
-sufficient to run TurboQuake.
-
-The core delivers roughly 486DX2-66-class performance. It runs the Doom
-timedemo at 29.1 FPS at maximum detail, compared with 21.0 FPS on ao486 using
-the same MiSTer setup.
+z486_MiSTer is an experimental PC core for MiSTer. It runs the z386 CPU from
+[Marty_MiSTer](https://github.com/MiSTer-devel/Marty_MiSTer) (`src/z386`) as a
+386DX at a fixed 16 MHz, with no cache and no FPU. The CPU advances on a 16 MHz
+clock enable; memory, video, sound and timers keep running on `clk_sys`.
 
 The core uses MiSTer SDRAM for system memory and supports 16, 32, 64, or 128 MB
 configurations. Video hardware provides VGA and ET4000-compatible SVGA modes.
@@ -30,12 +24,3 @@ the files as follows:
 
 Development and compatibility discussion is available in the
 [MiSTer FPGA forum thread](https://misterfpga.org/viewtopic.php?t=10667).
-
-## 386 Build
-
-An alternative build swaps the 486 for the z386 core from
-[Marty_MiSTer](https://github.com/MiSTer-devel/Marty_MiSTer) (`src/z386`),
-running as a 386DX at a fixed 16 MHz with no cache and no FPU. The rest of the
-system (memory, video, sound, timers) is unchanged. To build it, replace
-`cpu_z486.qip` with `cpu_z386.qip` in `z486_mister.qsf`. The simulator target is
-`make -C verilator z386`.

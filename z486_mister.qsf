@@ -27,10 +27,6 @@ set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS OFF
 set_global_assignment -name OPTIMIZATION_MODE BALANCED
 set_global_assignment -name ALLOW_POWER_UP_DONT_CARE ON
 # END build_profile.py settings
-set_global_assignment -name VERILOG_MACRO "Z486_QUARTUS_M10K_UCODE=1"
-set_global_assignment -name VERILOG_MACRO "Z486_ALTERA_ALU=1"
-# 386 build (cpu_z386.qip below): remove CPU_386 to build the 486 again.
-set_global_assignment -name VERILOG_MACRO "CPU_386=1"
 set_global_assignment -name VERILOG_MACRO "Z386_QUARTUS_M10K_UCODE=1"
 set_global_assignment -name VERILOG_MACRO "Z386_ALTERA_ALU=1"
 # SVGA framebuffer (mode 0x101 etc.): HPS framebuffer scaler reads the DDR3 FB
@@ -268,7 +264,7 @@ set_global_assignment -name QIP_FILE backend.qip
 set_global_assignment -name SDC_FILE z486_mister.sdc
 set_global_assignment -name SEARCH_PATH sys
 set_global_assignment -name SYSTEMVERILOG_FILE z486_mister.sv
-# CPU: cpu_z386.qip (386 at 16 MHz, needs the CPU_386 macro above) or cpu_z486.qip (486)
+# CPU: z386 at 16 MHz
 set_global_assignment -name QIP_FILE cpu_z386.qip
 
 

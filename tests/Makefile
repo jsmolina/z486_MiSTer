@@ -3,7 +3,7 @@ OBJ_DIR := obj_dir
 
 .PHONY: test clean
 
-test: $(OBJ_DIR)/Vtb_iobus_adapter $(OBJ_DIR)/Vtb_pit_io $(OBJ_DIR)/Vtb_rtc_ram_size $(OBJ_DIR)/Vtb_sdram_size $(OBJ_DIR)/Vtb_main_memory_svga $(OBJ_DIR)/Vtb_vga_fb_dimensions $(OBJ_DIR)/Vtb_vga_ondemand_mode13 $(OBJ_DIR)/Vtb_vga_plane_ram $(OBJ_DIR)/Vtb_mt32pi
+test: $(OBJ_DIR)/Vtb_iobus_adapter $(OBJ_DIR)/Vtb_pit_io $(OBJ_DIR)/Vtb_rtc_ram_size $(OBJ_DIR)/Vtb_sdram_size $(OBJ_DIR)/Vtb_main_memory_svga $(OBJ_DIR)/Vtb_vga_fb_dimensions $(OBJ_DIR)/Vtb_vga_ondemand_mode13 $(OBJ_DIR)/Vtb_vga_mode13_rows $(OBJ_DIR)/Vtb_vga_plane_ram $(OBJ_DIR)/Vtb_mt32pi
 	./$(OBJ_DIR)/Vtb_iobus_adapter
 	./$(OBJ_DIR)/Vtb_pit_io
 	./$(OBJ_DIR)/Vtb_rtc_ram_size
@@ -11,6 +11,7 @@ test: $(OBJ_DIR)/Vtb_iobus_adapter $(OBJ_DIR)/Vtb_pit_io $(OBJ_DIR)/Vtb_rtc_ram_
 	./$(OBJ_DIR)/Vtb_main_memory_svga
 	./$(OBJ_DIR)/Vtb_vga_fb_dimensions
 	./$(OBJ_DIR)/Vtb_vga_ondemand_mode13
+	./$(OBJ_DIR)/Vtb_vga_mode13_rows
 	./$(OBJ_DIR)/Vtb_vga_plane_ram
 	./$(OBJ_DIR)/Vtb_mt32pi
 
@@ -25,6 +26,10 @@ $(OBJ_DIR)/Vtb_vga_fb_dimensions: tb_vga_fb_dimensions.sv ../src/soc/vga.v ../sr
 $(OBJ_DIR)/Vtb_vga_ondemand_mode13: tb_vga_ondemand_mode13.sv ../src/soc/vga.v ../src/common/dpram.v | $(OBJ_DIR)
 	$(VERILATOR) --binary --timing -Wno-fatal --Mdir $(OBJ_DIR)/vga_ondemand_mode13 \
 		--top-module tb_vga_ondemand_mode13 $^ -o ../Vtb_vga_ondemand_mode13
+
+$(OBJ_DIR)/Vtb_vga_mode13_rows: tb_vga_mode13_rows.sv ../src/soc/vga.v ../src/common/dpram.v | $(OBJ_DIR)
+	$(VERILATOR) --binary --timing -Wno-fatal --Mdir $(OBJ_DIR)/vga_mode13_rows \
+		--top-module tb_vga_mode13_rows $^ -o ../Vtb_vga_mode13_rows
 
 $(OBJ_DIR)/Vtb_vga_plane_ram: tb_vga_plane_ram.sv ../src/soc/vga.v ../src/common/dpram.v | $(OBJ_DIR)
 	$(VERILATOR) --binary --timing -Wno-fatal --Mdir $(OBJ_DIR)/vga_plane_ram \

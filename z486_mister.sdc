@@ -7,19 +7,9 @@ set_false_path -from [get_registers {*cpu_reset_n*}]
 set_false_path -from [get_registers {*reset_sync_r*}]
 set_false_path -from [get_registers {*boot_done*}]
 
-# The segmentation adder (seg_linear) reaches the early-read accept
-# (early_rd_present) only through the mem_linear_addr mux's complex/microcode
-# leg, but early_rd_present requires the NON-complex demand leg (linear_early).
-# Those are mutually exclusive (complex vs !complex), so seg_linear ->
-# early_rd_present is a false path -- yet it otherwise dominates the worst
-# cones across most sweep seeds.  Cut it so STA ranks on real datapaths.
-set_false_path -through [get_nets {*seg_unit|Add0*}] \
-               -through [get_nets {*early_rd_present*}]
-
-# 386 build (cpu_z386.qip): the z386 core advances only on a 16 MHz enable,
-# at least three clk_sys apart for any profile clock >= 48 MHz. Paths that
-# start and end inside the core get three clocks of setup and two of hold;
-# paths through the z386_pc bus shim keep the single-clock default. Matches
-# nothing in the 486 build.
+# The z386 core advances only on a 16 MHz enable, at least three clk_sys
+# apart for any profile clock >= 48 MHz. Paths that start and end inside the
+# core get three clocks of setup and two of hold; paths through the z386_pc
+# bus shim keep the single-clock default.
 set_multicycle_path -setup 3 -from [get_registers {*|core386|*}] -to [get_registers {*|core386|*}]
 set_multicycle_path -hold  2 -from [get_registers {*|core386|*}] -to [get_registers {*|core386|*}]

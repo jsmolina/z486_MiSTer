@@ -1,4 +1,4 @@
-obj_dir/
+obj_dir*/
 ucode.hex
+pla_entry_rom.hex
 waveform.fst
-obj_dir_386/

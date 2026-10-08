@@ -473,17 +473,13 @@ wire  [1:0] video_write_mode;
 // SVGA framebuffer descriptor wires (video_*) are now module outputs.
 
 // ============================================================================
-// z486 CPU
+// CPU: z386 at 16 MHz (src/z386_pc.sv)
 // ============================================================================
 wire [31:0] dma_snoop_addr;
 wire        dma_snoop_valid;
 wire        cpu_triple_fault_reset;
 
-`ifdef CPU_386
-z386_pc #(              // 386 at 16 MHz (cpu_z386.qip)
-`else
-z486 #(
-`endif
+z386_pc #(
     .PROTECT_UMA_ROM(1),
     .DCACHE_SET_BITS(DCACHE_SET_BITS),
     .ICACHE_SET_BITS(ICACHE_SET_BITS),

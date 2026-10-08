@@ -1,5 +1,5 @@
 # z386 from Marty_MiSTer (src/z386/UPSTREAM.md) behind the z486 port list.
-# Needs the CPU_386 / Z386_* macros in z486_mister.qsf.
+# Needs the Z386_* macros in z486_mister.qsf.
 set_global_assignment -name SEARCH_PATH src/z386
 set_global_assignment -name MISC_FILE src/z386/ucode.mif
 set_global_assignment -name SYSTEMVERILOG_FILE src/z386/z386_pkg.sv

@@ -2,20 +2,12 @@
 
 ## Build
 
-The default simulator includes the x87 unit, matching the MiSTer build:
-
 ```sh
 make
 ```
 
-Use the explicit reduced target only when testing behavior without an FPU:
-
-```sh
-make no_x87
-```
-
-The binaries are `obj_dir/Vz486_mister_sim` and
-`obj_dir_no_x87/Vz486_mister_sim`, respectively.
+The binary is `obj_dir/Vz486_mister_sim`, a 386 at 16 MHz. The microcode hex
+files are read at run time, so run it from this directory.
 
 ## Disk images
 
@@ -150,12 +142,3 @@ window:
 The interval is wall-clock seconds. The checkpoint name and trace boundaries
 use simulator time (`2 * cycle`). Each full-system checkpoint can consume
 hundreds of megabytes, so keep retention bounded.
-
-## 386 build
-
-`make z386` builds the 16 MHz 386 variant into `obj_dir_386`. It reads its own
-`ucode.hex` at run time, so run it from that directory:
-
-```sh
-cd obj_dir_386 && ./Vz486_mister_sim --boot0 ../boot0.rom --boot1 ../boot1.rom --disk /tmp/dos.vhd
-```

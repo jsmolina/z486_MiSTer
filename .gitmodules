@@ -1,4 +1,0 @@
-[submodule "src/z486"]
-	path = src/z486
-	url = https://github.com/nand2mario/z486.git
-	branch = main
